@@ -12,7 +12,7 @@ public class AddNoteEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPost(
-            "/notes", 
+            "/api/notes", 
             async ([FromServices] ISender sender, [FromBody] AddNoteCommand command) =>
             {
                 var result = await sender.Send(command);
@@ -22,6 +22,6 @@ public class AddNoteEndpoint : ICarterModule
                 }
                 
                 return Results.Created();
-        });
+        }).Produces(201).Produces(400).WithName("AddNote");
     }
 }

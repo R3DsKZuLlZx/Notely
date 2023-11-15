@@ -11,11 +11,11 @@ public class GetNotesEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/notes", async ([FromServices] ISender sender) =>
+        app.MapGet("/api/notes", async ([FromServices] ISender sender) =>
         {
             var query = new GetNotesQuery();
             var notes = await sender.Send(query);
             return Results.Ok(notes);
-        });
+        }).Produces<List<Note>>().WithName("GetNotes");
     }
 }

@@ -12,7 +12,7 @@ public class EditNoteEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapPut(
-            "/notes", 
+            "/api/notes", 
             async ([FromServices] ISender sender, [FromBody] EditNoteCommand command) =>
             {
                 var result = await sender.Send(command);
@@ -22,6 +22,6 @@ public class EditNoteEndpoint : ICarterModule
                 }
                 
                 return Results.Ok();
-        });
+        }).Produces(200).Produces(400).WithName("EditNote");
     }
 }

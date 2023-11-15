@@ -12,7 +12,7 @@ public class DeleteNoteEndpoint : ICarterModule
     public void AddRoutes(IEndpointRouteBuilder app)
     {
         app.MapDelete(
-            "/notes/{fileName}", 
+            "/api/notes/{fileName}", 
             async ([FromServices] ISender sender, string fileName) =>
         {
             var command = new DeleteNoteCommand
@@ -22,6 +22,6 @@ public class DeleteNoteEndpoint : ICarterModule
 
             await sender.Send(command);
             return Results.NoContent();
-        });
+        }).Produces(204).WithName("DeleteNote");
     }
 }
