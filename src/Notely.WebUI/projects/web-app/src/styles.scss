@@ -1,0 +1,55 @@
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/mixins';
+
+:root {
+  --icon-search: url("./assets/search-black.svg");
+  --icon-theme: url("./assets/sun-black.svg");
+}
+
+@include color-mode(dark) {
+  --icon-search: url("./assets/search-white.svg");
+  --icon-theme: url("./assets/moon-white.svg");
+}
+
+.icon-theme {
+  background: var(--icon-theme) no-repeat;
+}
+
+.icon-search {
+  background: var(--icon-search) no-repeat;
+}
+
+app-theme-toggle {
+  margin-left: 1rem;
+}
+
+.header {
+  margin: 1rem 0;
+}
+
+.col {
+  place-self: center;
+}
+
+.col:last-child {
+  text-align: right;
+}
+
+.btn {
+  height: 25px;
+  width: 25px;
+  border: none;
+  padding: 0;
+}
+
+.note {
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  background-color: #fdfd96;
+}
+
+.note-title {
+  color: black;
+}
