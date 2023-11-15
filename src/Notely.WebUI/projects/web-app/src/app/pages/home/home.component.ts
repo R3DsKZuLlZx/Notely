@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NoteComponent } from '../note/note.component';
-import { ThemeToggleComponent } from '../theme-toggle/theme-toggle.component';
-import { Note, NotelyClient } from '../../../generated/api';
+import { NoteComponent } from '../../shared/note/note.component';
+import { ThemeToggleComponent } from '../../shared/theme-toggle/theme-toggle.component';
+import { Note, NotelyClient } from '../../../../generated/api';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({

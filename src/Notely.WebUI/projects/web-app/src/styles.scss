@@ -5,11 +5,16 @@
 :root {
   --icon-search: url("./assets/search-black.svg");
   --icon-theme: url("./assets/sun-black.svg");
+  --icon-edit: url("./assets/pencil-black.svg");
+  --icon-back: url("./assets/back-black.svg");
+  --note-background-color: #fdfd96;
 }
 
 @include color-mode(dark) {
   --icon-search: url("./assets/search-white.svg");
   --icon-theme: url("./assets/moon-white.svg");
+  --icon-edit: url("./assets/pencil-white.svg");
+  --icon-back: url("./assets/back-white.svg");
 }
 
 .icon-theme {
@@ -20,12 +25,22 @@
   background: var(--icon-search) no-repeat;
 }
 
+.icon-edit {
+  background: var(--icon-edit) no-repeat;
+}
+
+.icon-back {
+  background: var(--icon-back) no-repeat;
+}
+
 app-theme-toggle {
   margin-left: 1rem;
 }
 
 .header {
   margin: 1rem 0;
+  min-height: 4rem;
+  display: grid;
 }
 
 .col {
@@ -47,9 +62,20 @@ app-theme-toggle {
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   padding: 1rem 1.5rem;
-  background-color: #fdfd96;
+  background-color:var(--note-background-color);
+  cursor: pointer;
 }
 
 .note-title {
   color: black;
+}
+
+.form-control {
+  border: none;
+  padding: 0;
+  margin-bottom: 0.5rem;
+}
+
+.form-control:focus {
+  box-shadow: none;
 }

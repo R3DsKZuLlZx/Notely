@@ -284,6 +284,7 @@ export class NotelyClient {
 export interface Note {
     fileName: string;
     content: string;
+    colour: string;
 }
 
 export interface CommandOfBoolean {

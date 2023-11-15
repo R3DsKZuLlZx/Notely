@@ -38,7 +38,15 @@
       ],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
-        "plugin:@angular-eslint/template/accessibility",
+        "prettier"
+      ],
+      "rules": {}
+    },
+    {
+      "files": [
+        "*.scss"
+      ],
+      "extends": [
         "prettier"
       ],
       "rules": {}

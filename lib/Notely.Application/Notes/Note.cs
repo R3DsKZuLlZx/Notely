@@ -6,4 +6,5 @@ public class Note
 
     public required string FileName { get; set; }
     public required string Content { get; set; }
+    public string Colour { get; set; } = "#fdfd96";
 }
