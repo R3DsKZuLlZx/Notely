@@ -29,7 +29,7 @@ builder.Services.AddNotelyApplication(builder.Configuration);
 builder.Services.AddNotelyInfrastructure(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerDocument();
 builder.Services.AddCarter();
 
 var app = builder.Build();
@@ -38,8 +38,8 @@ app.UseSerilogRequestLogging();
 
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseOpenApi();
+    app.UseSwaggerUi3();
 }
 
 app.UseHttpsRedirection();

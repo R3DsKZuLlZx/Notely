@@ -13,10 +13,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13"/>
+        <PackageReference Include="NSwag.AspNetCore" Version="13.20.0" />
+        <PackageReference Include="NSwag.MSBuild" Version="13.20.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Serilog.AspNetCore" Version="7.0.0" />
         <PackageReference Include="Serilog.Extensions.Hosting" Version="7.0.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
         <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -31,5 +34,9 @@
         <ProjectReference Include="..\..\lib\Notely.Application\Notely.Application.csproj"/>
         <ProjectReference Include="..\..\lib\Notely.Infrastructure\Notely.Infrastructure.csproj"/>
     </ItemGroup>
+
+    <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Debug'">
+        <Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net70) run api.nswag /variables:Configuration=$(Configuration)" />
+    </Target>
 
 </Project>
