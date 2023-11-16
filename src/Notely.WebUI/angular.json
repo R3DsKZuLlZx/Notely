@@ -50,7 +50,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/web-app/src/favicon.ico",
-              "projects/web-app/src/assets"
+              "projects/web-app/src/assets",
+              "projects/web-app/src/manifest.webmanifest"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
@@ -75,7 +76,8 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "projects/web-app/ngsw-config.json"
             },
             "development": {
               "optimization": false,
@@ -117,7 +119,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/web-app/src/favicon.ico",
-              "projects/web-app/src/assets"
+              "projects/web-app/src/assets",
+              "projects/web-app/src/manifest.webmanifest"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
