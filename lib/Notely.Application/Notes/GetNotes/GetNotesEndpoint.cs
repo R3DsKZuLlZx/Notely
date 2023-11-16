@@ -14,8 +14,8 @@ public class GetNotesEndpoint : ICarterModule
         app.MapGet("/api/notes", async ([FromServices] ISender sender) =>
         {
             var query = new GetNotesQuery();
-            var notes = await sender.Send(query);
-            return Results.Ok(notes);
+            var result = await sender.Send(query);
+            return Results.Ok(result.Value);
         }).Produces<List<Note>>().WithName("GetNotes");
     }
 }

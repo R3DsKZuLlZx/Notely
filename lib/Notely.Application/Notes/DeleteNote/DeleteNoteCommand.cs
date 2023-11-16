@@ -2,7 +2,7 @@
 
 namespace Notely.Application.Notes.DeleteNote;
 
-public class DeleteNoteCommand : Command<bool>
+public class DeleteNoteCommand : Command
 { 
-    public required string FileName { get; set; }
+    public required Guid Id { get; set; }
 }

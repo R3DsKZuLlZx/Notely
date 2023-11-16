@@ -1,8 +1,9 @@
-﻿using Notely.Application.Common.Cqrs;
+﻿using FluentResults;
+using Notely.Application.Common.Cqrs;
 
 namespace Notely.Application.Notes.GetNote;
 
-public class GetNoteQuery : Query<Note?>
+public class GetNoteQuery : Query<Result<Note>>
 {
-    public required string FileName { get; set; }
+    public required Guid Id { get; set; }
 }

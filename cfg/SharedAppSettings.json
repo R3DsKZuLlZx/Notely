@@ -1,6 +1,6 @@
 {
-  "FileStorageOptions": {
-    "FolderPath": "c:/Notes"
+  "ConnectionStrings": {
+    "ApplicationDbContext": "Server=(LocalDb)\\MSSQLLocalDB;Database=NotelyDb;Trusted_Connection=True;"
   },
   "Logging": {
     "LogLevel": {

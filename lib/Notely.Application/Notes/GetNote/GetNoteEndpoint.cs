@@ -11,20 +11,20 @@ public class GetNoteEndpoint : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/api/notes/{fileName}", async ([FromServices] ISender sender, string fileName) =>
+        app.MapGet("/api/notes/{id}", async ([FromServices] ISender sender, Guid id) =>
         {
             var query = new GetNoteQuery
             {
-                FileName = fileName,
+                Id = id,
             };
 
-            var note = await sender.Send(query);
-            if (note is null)
+            var result = await sender.Send(query);
+            if (!result.IsSuccess)
             {
                 return Results.BadRequest();
             }
             
-            return Results.Ok(note);
+            return Results.Ok(result.Value);
         }).Produces<Note>().Produces(400).WithName("GetNote");
     }
 }

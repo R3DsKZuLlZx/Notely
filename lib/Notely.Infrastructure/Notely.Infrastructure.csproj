@@ -13,11 +13,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Foundatio.AzureStorage" Version="10.6.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13" />
         <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0"/>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0"/>
         <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="7.0.13" />
-        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.7.0" />
         <PackageReference Include="SecurityCodeScan.VS2019" Version="5.6.7">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -30,6 +30,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Notely.Application\Notely.Application.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Database\Migrations\" />
     </ItemGroup>
 
 </Project>

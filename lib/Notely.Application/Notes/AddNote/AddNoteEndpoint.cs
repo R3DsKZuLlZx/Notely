@@ -16,7 +16,7 @@ public class AddNoteEndpoint : ICarterModule
             async ([FromServices] ISender sender, [FromBody] AddNoteCommand command) =>
             {
                 var result = await sender.Send(command);
-                if (!result)
+                if (!result.IsSuccess)
                 {
                     return Results.BadRequest();
                 }

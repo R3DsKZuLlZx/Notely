@@ -1,9 +1,11 @@
-﻿using Notely.Application.Common.Cqrs;
+﻿using FluentResults;
+using Notely.Application.Common.Cqrs;
 
 namespace Notely.Application.Notes.EditNote;
 
-public class EditNoteCommand : Command<bool>
+public class EditNoteCommand : Command<Result>
 {
-    public required string FileName { get; set; }
+    public required Guid Id { get; set; }
+    public required string Title { get; set; }
     public required string Content { get; set; }
 }

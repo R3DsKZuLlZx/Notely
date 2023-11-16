@@ -1,31 +1,19 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using Notely.Application.Common.Interfaces;
+﻿using FluentResults;
+using MediatR;
 
 namespace Notely.Application.Notes.GetNote;
 
-public class GetNoteHandler(ILogger<GetNoteHandler> logger, IFileRepository fileRepository)
-    : IRequestHandler<GetNoteQuery, Note?>
+public class GetNoteHandler(INoteRepository noteRepository)
+    : IRequestHandler<GetNoteQuery, Result<Note>>
 {
-    public async Task<Note?> Handle(GetNoteQuery request, CancellationToken cancellationToken)
+    public async Task<Result<Note>> Handle(GetNoteQuery request, CancellationToken cancellationToken)
     {
-        var filePath = Path.Combine(Note.Directory, $"{request.FileName}.txt");
-        var exists = await fileRepository.Storage.ExistsAsync(filePath);
-        if (!exists)
+        var note = await noteRepository.GetAsync(request.Id, cancellationToken);
+        if (note is null)
         {
-            logger.LogInformation("File does not exist at filepath: {FilePath}", filePath);
-            return null;
+            return Result.Fail<Note>($"No note exists with id {request.Id}");
         }
-        
-        logger.LogInformation("Getting file content for filepath: {FilePath}", filePath);
-        var stream = await fileRepository.Storage.GetFileStreamAsync(filePath, cancellationToken);
-        var reader = new StreamReader(stream);
-        var content = await reader.ReadToEndAsync(cancellationToken);
-        
-        return new Note
-        {
-            FileName = request.FileName,
-            Content = content,
-        };
+
+        return Result.Ok(note);
     }
 }

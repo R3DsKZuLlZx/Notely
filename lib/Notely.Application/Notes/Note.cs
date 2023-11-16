@@ -2,9 +2,8 @@
 
 public class Note
 {
-    public const string Directory = "Notes";
-
-    public required string FileName { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public required string Title { get; set; }
     public required string Content { get; set; }
     public string Colour { get; set; } = "#fdfd96";
 }

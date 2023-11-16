@@ -1,13 +1,12 @@
 ﻿using System.Reflection;
-using Foundatio.Storage;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Notely.Application;
 using Notely.Application.Common.Interfaces;
-using Notely.Infrastructure.FileStorage;
-using Notely.Infrastructure.Jobs;
-using Quartz;
+using Notely.Application.Notes;
+using Notely.Infrastructure.Database;
+using Notely.Infrastructure.Database.Repositories;
 
 namespace Notely.Infrastructure;
 
@@ -17,61 +16,19 @@ public static class NotelyInfrastructureExtensions
         this IServiceCollection serviceCollection,
         IConfiguration configuration)
     {
-        serviceCollection.ConfigureSingletonOption<FileStorageOptions>(configuration, nameof(FileStorageOptions));
-
-        serviceCollection.AddScoped<IFileRepository, FileRepository>(provider =>
+        serviceCollection.AddDbContext<ApplicationDbContext>(options =>
         {
-            var options = provider.GetRequiredService<FileStorageOptions>();
-
-            IFileStorage fileStorage = options.StorageType.ToLowerInvariant() switch
-            {
-                FileStorageOptions.Folder => new FolderFileStorage(builder => builder.Folder(options.FolderPath)),
-                FileStorageOptions.Azure => new AzureFileStorage(builder => builder
-                    .ConnectionString(options.AzureStorageConnectionString)
-                    .ContainerName(options.AzureStorageContainerName)),
-                _ => throw new NotSupportedException(),
-            };
-
-            return new FileRepository(fileStorage);
-        });
-
-        serviceCollection.AddQuartz(options =>
-        {
-            options.UseMicrosoftDependencyInjectionJobFactory();
+            options.UseSqlServer(configuration.GetConnectionString(nameof(ApplicationDbContext)));
         });
         
-        serviceCollection.AddQuartzHostedService(options =>
-        {
-            options.AwaitApplicationStarted = true;
-            options.WaitForJobsToComplete = true;
-        });
-
-        serviceCollection.AddQuartzJobs(Assembly.GetExecutingAssembly());
-
         serviceCollection.AddHealthChecks().AddCustomHealthChecks(Assembly.GetExecutingAssembly());
+        
+        serviceCollection.AddScoped<IUnitOfWork, UnitOfWork>();
+        serviceCollection.AddScoped<INoteRepository, NoteRepository>();
         
         return serviceCollection;
     }
     
-    private static IServiceCollection AddQuartzJobs(
-        this IServiceCollection serviceCollection, 
-        Assembly assembly)
-    {
-        var types = assembly
-            .GetTypes()
-            .Where(x => x.BaseType is not null)
-            .Where(x => x.BaseType!.IsGenericType)
-            .Where(x => x.BaseType!.GetGenericTypeDefinition() == typeof(BaseJob<>))
-            .ToArray();
-     
-        foreach (var type in types)
-        {
-            serviceCollection.ConfigureOptions(type);
-        }
-     
-        return serviceCollection;
-    }
-     
     private static IHealthChecksBuilder AddCustomHealthChecks(
         this IHealthChecksBuilder builder, 
         Assembly assembly)
