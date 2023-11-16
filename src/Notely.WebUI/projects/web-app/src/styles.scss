@@ -7,6 +7,7 @@
   --icon-theme: url("./assets/sun-black.svg");
   --icon-edit: url("./assets/pencil-black.svg");
   --icon-back: url("./assets/back-black.svg");
+  --icon-plus: url("./assets/plus-black.svg");
   --note-background-color: #fdfd96;
 }
 
@@ -15,6 +16,7 @@
   --icon-theme: url("./assets/moon-white.svg");
   --icon-edit: url("./assets/pencil-white.svg");
   --icon-back: url("./assets/back-white.svg");
+  --icon-plus: url("./assets/plus-white.svg");
 }
 
 .icon-theme {
@@ -33,8 +35,8 @@
   background: var(--icon-back) no-repeat;
 }
 
-app-theme-toggle {
-  margin-left: 1rem;
+.icon-plus {
+  background: var(--icon-plus) no-repeat;
 }
 
 .header {
@@ -78,4 +80,8 @@ app-theme-toggle {
 
 .form-control:focus {
   box-shadow: none;
+}
+
+.header .btn {
+  margin-left: 1rem;
 }

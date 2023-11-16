@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ThemeToggleComponent } from '../../shared/theme-toggle/theme-toggle.component';
-import {Router, RouterModule } from '@angular/router';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AddNoteCommand, NotelyClient } from '../../../../generated/api';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-add',
@@ -33,16 +35,23 @@ import {FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angula
   styleUrl: './add.component.scss'
 })
 export class AddComponent {
-  constructor(private readonly router: Router) {
+  constructor(private readonly router: Router, private readonly notelyClient: NotelyClient) {
   }
 
   addForm = new FormGroup({
-    title: new FormControl(''),
-    content: new FormControl(''),
+    title: new FormControl('', [Validators.required]),
+    content: new FormControl('', [Validators.required]),
   });
 
-  onSubmit() {
-    console.log(this.addForm.value);
+  async onSubmit() {
+    if(!!this.addForm.valid) {
+      let addNoteCommand: AddNoteCommand = {
+        title: this.addForm.value.title ?? '',
+        content: this.addForm.value.content ?? '',
+      }
+      await lastValueFrom(this.notelyClient.addNote(addNoteCommand));
+    }
+
     this.router.navigate(['/'])
   }
 }

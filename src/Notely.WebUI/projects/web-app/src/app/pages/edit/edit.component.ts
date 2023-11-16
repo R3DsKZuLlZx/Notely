@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {Router, RouterModule } from '@angular/router';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ThemeToggleComponent } from '../../shared/theme-toggle/theme-toggle.component';
+import { EditNoteCommand, Note, NotelyClient } from '../../../../generated/api';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-edit',
@@ -23,26 +25,50 @@ import { ThemeToggleComponent } from '../../shared/theme-toggle/theme-toggle.com
       </div>
 
       <form id="editForm" [formGroup]="editForm" (ngSubmit)="onSubmit()">
-        <input class="form-control" type="text" formControlName="title" placeholder="Title" style="font-size: 2.5rem; line-height: 1.2">
+        <input class="form-control" type="text" formControlName="title" style="font-size: calc(1.375rem + 1.5vw); line-height: 1.2; font-weight: 500">
         <hr>
-        <textarea class="form-control" formControlName="content" placeholder="Content" style="height: 20rem"></textarea>
+        <textarea class="form-control" formControlName="content" style="height: 20rem"></textarea>
       </form>
 
     </div>
   `,
   styleUrl: './edit.component.scss'
 })
-export class EditComponent {
-  constructor(private readonly router: Router) {
+export class EditComponent implements OnInit {
+  constructor(private readonly route: ActivatedRoute, private readonly router: Router, private readonly notelyClient: NotelyClient) {
+    this.noteId = this.route.snapshot.params['id'];
   }
 
+  async ngOnInit() {
+    this.note = await lastValueFrom(this.notelyClient.getNote(this.noteId))
+    this.editForm.setValue(
+      {
+        title : this.note.title,
+        content: this.note.content
+      })
+
+    this.initialValues = this.editForm.value;
+  }
+
+  noteId: string;
+  note: Note | null = null;
+  initialValues: {} = {};
+
   editForm = new FormGroup({
-    title: new FormControl(''),
-    content: new FormControl(''),
+    title: new FormControl(this.note?.title, [Validators.required]),
+    content: new FormControl(this.note?.content, [Validators.required]),
   });
 
-  onSubmit() {
-    console.log(this.editForm.value);
-    this.router.navigate(['/details'])
+  async onSubmit() {
+    if (this.initialValues != this.editForm.value && !!this.editForm.valid) {
+      let editNoteCommand: EditNoteCommand = {
+        id: this.noteId,
+        title: this.editForm.value.title ?? '',
+        content: this.editForm.value.content ?? '',
+      }
+      await lastValueFrom(this.notelyClient.editNote(editNoteCommand));
+    }
+
+    this.router.navigate(['/details', this.noteId])
   }
 }

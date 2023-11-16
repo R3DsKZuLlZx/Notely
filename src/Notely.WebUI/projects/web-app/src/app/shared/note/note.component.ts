@@ -8,9 +8,9 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <div class="note" [routerLink]="['/details']" [style.background-color]="note.colour">
+    <div class="note" [routerLink]="['/details', note.id]" [style.background-color]="note.colour">
       <div class="note-title">
-        {{note.fileName}}
+        {{note.title}}
       </div>
     </div>
   `,

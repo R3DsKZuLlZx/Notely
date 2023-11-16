@@ -4,11 +4,13 @@ import { NoteComponent } from '../../shared/note/note.component';
 import { ThemeToggleComponent } from '../../shared/theme-toggle/theme-toggle.component';
 import { Note, NotelyClient } from '../../../../generated/api';
 import { HttpClientModule } from '@angular/common/http';
+import { lastValueFrom } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NoteComponent, ThemeToggleComponent, HttpClientModule],
+  imports: [CommonModule, NoteComponent, ThemeToggleComponent, HttpClientModule, RouterModule],
   template: `
     <div class="container">
 
@@ -18,17 +20,19 @@ import { HttpClientModule } from '@angular/common/http';
             <h1>Notes</h1>
           </div>
           <div class="col">
+            <button class="btn icon-plus" [routerLink]="['/add']"></button>
             <button class="btn icon-search"></button>
             <app-theme-toggle />
           </div>
         </div>
       </div>
 
-      @for (note of notes; track note.fileName) {
+      @for (note of notes; track note.id) {
         <app-note [note]="note" />
       } @empty {
       Empty
       }
+
     </div>
   `,
   styleUrl: './home.component.scss'
@@ -38,7 +42,7 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.notes = await this.notelyClient.getNotes().toPromise() ?? [];
+    this.notes = await lastValueFrom(this.notelyClient.getNotes()) ?? [];
   }
 
   notes: Note[] = []

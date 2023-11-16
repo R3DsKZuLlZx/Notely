@@ -28,11 +28,11 @@ export class NotelyClient {
         this.baseUrl = baseUrl !== undefined && baseUrl !== null ? baseUrl : "";
     }
 
-    getNote(fileName: string): Observable<Note> {
-        let url_ = this.baseUrl + "/api/notes/{fileName}";
-        if (fileName === undefined || fileName === null)
-            throw new Error("The parameter 'fileName' must be defined.");
-        url_ = url_.replace("{fileName}", encodeURIComponent("" + fileName));
+    getNote(id: string): Observable<Note> {
+        let url_ = this.baseUrl + "/api/notes/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -82,11 +82,11 @@ export class NotelyClient {
         return _observableOf(null as any);
     }
 
-    deleteNote(fileName: string): Observable<void> {
-        let url_ = this.baseUrl + "/api/notes/{fileName}";
-        if (fileName === undefined || fileName === null)
-            throw new Error("The parameter 'fileName' must be defined.");
-        url_ = url_.replace("{fileName}", encodeURIComponent("" + fileName));
+    deleteNote(id: string): Observable<void> {
+        let url_ = this.baseUrl + "/api/notes/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
         url_ = url_.replace(/[?&]$/, "");
 
         let options_ : any = {
@@ -282,21 +282,23 @@ export class NotelyClient {
 }
 
 export interface Note {
-    fileName: string;
+    id: string;
+    title: string;
     content: string;
     colour: string;
 }
 
-export interface CommandOfBoolean {
+export interface CommandOfResult {
 }
 
-export interface EditNoteCommand extends CommandOfBoolean {
-    fileName: string;
+export interface EditNoteCommand extends CommandOfResult {
+    id: string;
+    title: string;
     content: string;
 }
 
-export interface AddNoteCommand extends CommandOfBoolean {
-    fileName: string;
+export interface AddNoteCommand extends CommandOfResult {
+    title: string;
     content: string;
 }
 
