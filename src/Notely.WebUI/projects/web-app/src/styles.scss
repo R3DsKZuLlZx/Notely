@@ -8,7 +8,6 @@
   --icon-edit: url("./assets/pencil-black.svg");
   --icon-back: url("./assets/back-black.svg");
   --icon-plus: url("./assets/plus-black.svg");
-  --note-background-color: #fdfd96;
 }
 
 @include color-mode(dark) {
@@ -67,8 +66,27 @@
   margin-bottom: 1rem;
   border-radius: 0.5rem;
   padding: 1rem 1.5rem;
-  background-color:var(--note-background-color);
   cursor: pointer;
+}
+
+app-note:nth-child(5n + 1) .note {
+  background-color: #BAE1FF;
+}
+
+app-note:nth-child(5n + 2) .note {
+  background-color: #BAFFC9;
+}
+
+app-note:nth-child(5n + 3) .note {
+  background-color: #FFFFBA;
+}
+
+app-note:nth-child(5n + 4) .note {
+  background-color: #FFDCF4;
+}
+
+app-note:nth-child(5n + 5) .note {
+  background-color: #FFADAD;
 }
 
 .note-title {
