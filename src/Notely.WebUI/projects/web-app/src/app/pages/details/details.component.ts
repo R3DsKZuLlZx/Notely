@@ -33,7 +33,7 @@ import { lastValueFrom } from 'rxjs';
       </p>
     </div>
   `,
-  styleUrl: './details.component.scss'
+  styles: []
 })
 export class DetailsComponent implements OnInit {
   constructor(private readonly route: ActivatedRoute, private readonly notelyClient: NotelyClient) {

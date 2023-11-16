@@ -26,7 +26,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
             <app-theme-toggle />
           </div>
         </div>
-        <div *ngIf="searchEnabled" class="row" style="margin-top: 1rem">
+        <div *ngIf="searchEnabled" class="row search-form">
           <form id="searchForm" [formGroup]="searchForm">
             <input class="form-control" type="text" formControlName="search" placeholder="Search">
           </form>
@@ -41,7 +41,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
     </div>
   `,
-  styleUrl: './home.component.scss'
+  styles: []
 })
 export class HomeComponent implements OnInit, OnDestroy {
   constructor(private readonly notelyClient: NotelyClient) {

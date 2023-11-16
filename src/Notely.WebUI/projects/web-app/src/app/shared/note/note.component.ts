@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
       </div>
     </div>
   `,
-  styleUrl: './note.component.scss'
+  styles: []
 })
 export class NoteComponent {
   @Input() note!: Note;

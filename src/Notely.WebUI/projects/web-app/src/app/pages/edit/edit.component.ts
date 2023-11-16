@@ -25,14 +25,14 @@ import { lastValueFrom } from 'rxjs';
       </div>
 
       <form id="editForm" [formGroup]="editForm" (ngSubmit)="onSubmit()">
-        <input class="form-control form-control__minimal" type="text" formControlName="title" style="font-size: calc(1.375rem + 1.5vw); line-height: 1.2; font-weight: 500">
+        <input class="form-control form-control__minimal" type="text" formControlName="title">
         <hr>
-        <textarea class="form-control form-control__minimal" formControlName="content" style="height: 20rem"></textarea>
+        <textarea class="form-control form-control__minimal" formControlName="content"></textarea>
       </form>
 
     </div>
   `,
-  styleUrl: './edit.component.scss'
+  styles: []
 })
 export class EditComponent implements OnInit {
   constructor(private readonly route: ActivatedRoute, private readonly router: Router, private readonly notelyClient: NotelyClient) {

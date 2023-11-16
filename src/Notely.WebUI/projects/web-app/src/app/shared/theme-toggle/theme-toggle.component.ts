@@ -8,7 +8,7 @@ import {CommonModule} from '@angular/common';
   template: `
     <button class="btn icon-theme" (click)="changeTheme()"></button>
   `,
-  styleUrl: './theme-toggle.component.scss'
+  styles: []
 })
 export class ThemeToggleComponent {
   changeTheme(): void {

@@ -92,3 +92,17 @@
 .header .btn.icon-back {
   margin-left: 0;
 }
+
+textarea {
+  height: calc(100vh - 10rem);
+}
+
+input.form-control__minimal {
+  font-size: calc(1.375rem + 1.5vw);
+  line-height: 1.2;
+  font-weight: 500;
+}
+
+.search-form {
+  margin-top: 1rem;
+}
