@@ -8,6 +8,7 @@
   --icon-edit: url("./assets/pencil-black.svg");
   --icon-back: url("./assets/back-black.svg");
   --icon-plus: url("./assets/plus-black.svg");
+  --note-color: black;
 }
 
 @include color-mode(dark) {
@@ -16,6 +17,7 @@
   --icon-edit: url("./assets/pencil-white.svg");
   --icon-back: url("./assets/back-white.svg");
   --icon-plus: url("./assets/plus-white.svg");
+  --note-color: var(--bs-body-bg);
 }
 
 .icon-theme {
@@ -90,7 +92,8 @@ app-note:nth-child(5n + 5) .note {
 }
 
 .note-title {
-  color: black;
+  color: var(--note-color);
+  font-weight: 500;
 }
 
 .form-control__minimal {
